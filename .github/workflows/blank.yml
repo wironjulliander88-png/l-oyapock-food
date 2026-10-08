@@ -9,19 +9,21 @@ jobs:
 
     steps:
       - name: Baixar código
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
-      - name: Configurar Java
-        uses: actions/setup-java@v4
+      - name: Configurar Java 17
+        uses: actions/setup-java@v5
         with:
           distribution: temurin
           java-version: '17'
 
-      - name: Dar permissão ao Gradle
-        run: chmod +x gradlew
+      - name: Configurar Gradle
+        uses: gradle/actions/setup-gradle@v5
+        with:
+          gradle-version: '8.13'
 
-      - name: Gerar APK
-        run: ./gradlew assembleDebug
+      - name: Compilar aplicativo
+        run: gradle assembleDebug
 
       - name: Salvar APK
         uses: actions/upload-artifact@v4
